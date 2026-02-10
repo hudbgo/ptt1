@@ -7,4 +7,5 @@ cd desktop
 npm run dev
 
 
+cd desktop
 npm run electron
