@@ -103,7 +103,7 @@ def execute_action(action_key: str, target: str, params: dict) -> dict:
             "started_at": started_at,
             "finished_at": datetime.utcnow().isoformat(),
         }
-    except Exception as exc:  # controlled boundary for standardized result format
+    except Exception as exc:
         logger.exception("execute_error action=%s target=%s error=%s", action_key, target, str(exc))
         return {
             "status": "error",

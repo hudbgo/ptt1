@@ -31,9 +31,10 @@ Esta separación evita que la IA invoque herramientas ofensivas directamente.
 1. Instala backend:
    ```bash
    python -m venv .venv
-   source .venv/bin/activate  # Windows: .venv\Scripts\activate
+   source .venv/bin/activate
    pip install -r backend/requirements.txt
    ```
+   En Windows usa `.venv\Scripts\activate`.
 2. Instala frontend:
    ```bash
    cd desktop && npm install && cd .. && npm install
