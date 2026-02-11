@@ -33,12 +33,14 @@ header h1 {
 }
 
 input {
+  width: 100%;
   flex: 1;
   background: #0b1028;
   color: #fff;
   border: 1px solid #354084;
   border-radius: 8px;
   padding: 10px;
+  margin-bottom: 8px;
 }
 
 button {
@@ -87,8 +89,18 @@ button.ghost {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
+}
+
+pre {
+  white-space: pre-wrap;
+  background: #0a1029;
+  border: 1px solid #24305a;
+  border-radius: 8px;
+  padding: 10px;
 }
 
 .error {
   color: #ffa2a2;
 }
+

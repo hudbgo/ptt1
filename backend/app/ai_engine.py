@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import json
 import torch
 from torch import nn
 
@@ -11,6 +12,8 @@ class AiFinding:
     description: str
     proposal_title: str
     proposal_plan: str
+    action_key: str
+    action_params: dict
 
 
 class RiskPrioritizer(nn.Module):
@@ -30,6 +33,11 @@ class RiskPrioritizer(nn.Module):
 
 
 class PentestAIAgent:
+    """IA agent: only analyzes and proposes actions, never executes.
+
+    Separation of duties: this module is deliberately isolated from execution tooling.
+    """
+
     def __init__(self):
         torch.manual_seed(7)
         self.model = RiskPrioritizer()
@@ -64,6 +72,11 @@ class PentestAIAgent:
                     description="Detected plaintext protocol (FTP/Telnet), increasing credential theft risk.",
                     proposal_title="Validate service hardening in controlled test",
                     proposal_plan=(
+                        "Plan: run read-only checks for service exposure and auth policy. "
+                        "Requires explicit human approval before execution."
+                    ),
+                    action_key="tcp_connectivity_check",
+                    action_params={"ports": [21, 23], "timeout": 1.0},
                         "Plan: run authenticated checks in an isolated environment, verify weak auth paths, "
                         "and document remediation. Requires explicit human approval before any intrusive test."
                     ),
@@ -78,6 +91,9 @@ class PentestAIAgent:
                     confidence=min(0.9, 0.5 + medium),
                     description="A database port appears exposed; validate network segmentation and authentication.",
                     proposal_title="Perform authorized configuration review",
+                    proposal_plan="Plan: run DNS and connectivity validation only, no intrusive operations.",
+                    action_key="dns_resolve",
+                    action_params={},
                     proposal_plan=(
                         "Plan: with owner approval, validate TLS/auth configuration and least-privilege policies. "
                         "Do not execute exploitation; gather evidence for mitigation only."
@@ -93,6 +109,9 @@ class PentestAIAgent:
                     confidence=min(0.88, 0.45 + medium),
                     description="Web service detected; recommended to run authenticated vulnerability checks.",
                     proposal_title="Run approved web security test plan",
+                    proposal_plan="Plan: perform safe HTTP HEAD checks after human approval.",
+                    action_key="http_head_check",
+                    action_params={"path": "/"},
                     proposal_plan=(
                         "Plan: execute non-destructive checks first (headers, TLS, outdated frameworks), "
                         "then only proceed with deeper tests after human acceptance."
@@ -109,7 +128,13 @@ class PentestAIAgent:
                     description="No common high-risk exposed services detected in quick scan.",
                     proposal_title="Continue periodic monitoring",
                     proposal_plan="Plan: keep baseline scans and review changes over time.",
+                    action_key="dns_resolve",
+                    action_params={},
                 )
             )
 
         return risk_score, findings
+
+
+def dump_action_params(action_params: dict) -> str:
+    return json.dumps(action_params, ensure_ascii=False)

@@ -8,12 +8,29 @@ class TargetCreate(BaseModel):
 
 class ProposalDecision(BaseModel):
     approved: bool
+    approved_by: str = Field(min_length=1, max_length=120)
+
+
+class ExecuteRequest(BaseModel):
+    proposal_id: int
+    executed_by: str = Field(min_length=1, max_length=120)
+    override_params: dict | None = None
 
 
 class ProposalOut(BaseModel):
     id: int
     title: str
     action_plan: str
+    action_key: str
+    action_params: dict
+    approved: bool | None
+    approved_by: str | None
+    approved_at: datetime | None
+    execution_status: str
+    execution_result: str | None
+    execution_error: str | None
+    executed_by: str | None
+    executed_at: datetime | None
     approved: bool | None
 
     class Config:

@@ -5,6 +5,7 @@ const API_URL = 'http://127.0.0.1:8000'
 
 export default function App() {
   const [target, setTarget] = useState('')
+  const [operator, setOperator] = useState('analyst-1')
   const [loading, setLoading] = useState(false)
   const [analyses, setAnalyses] = useState([])
   const [error, setError] = useState('')
@@ -35,6 +36,24 @@ export default function App() {
   }
 
   const decideProposal = async (id, approved) => {
+    await axios.patch(`${API_URL}/proposals/${id}`, { approved, approved_by: operator })
+    await loadAnalyses()
+  }
+
+  const executeProposal = async (proposal) => {
+    const actionInfo = `Se ejecutará acción segura: ${proposal.action_key}\nParámetros: ${JSON.stringify(proposal.action_params)}`
+    if (!window.confirm(actionInfo)) return
+    try {
+      await axios.post(`${API_URL}/execute`, {
+        proposal_id: proposal.id,
+        executed_by: operator,
+      })
+      await loadAnalyses()
+    } catch {
+      setError('No se pudo ejecutar la propuesta aprobada.')
+    }
+  }
+
     await axios.patch(`${API_URL}/proposals/${id}`, { approved })
     await loadAnalyses()
   }
@@ -48,6 +67,8 @@ export default function App() {
 
       <section className="panel">
         <form onSubmit={startAnalysis}>
+          <label>Operador</label>
+          <input value={operator} onChange={(e) => setOperator(e.target.value)} required />
           <label>IP o dominio objetivo autorizado</label>
           <div className="row">
             <input
@@ -82,6 +103,13 @@ export default function App() {
                   <div className="proposal" key={proposal.id}>
                     <p><strong>Propuesta:</strong> {proposal.title}</p>
                     <p>{proposal.action_plan}</p>
+                    <p><strong>Acción permitida:</strong> {proposal.action_key} | {JSON.stringify(proposal.action_params)}</p>
+                    <div className="actions">
+                      <button onClick={() => decideProposal(proposal.id, true)}>Aprobar</button>
+                      <button className="ghost" onClick={() => decideProposal(proposal.id, false)}>Rechazar</button>
+                      {proposal.approved === true && (
+                        <button onClick={() => executeProposal(proposal)}>Ejecutar</button>
+                      )}
                     <div className="actions">
                       <button onClick={() => decideProposal(proposal.id, true)}>Aprobar</button>
                       <button className="ghost" onClick={() => decideProposal(proposal.id, false)}>Rechazar</button>
@@ -89,6 +117,13 @@ export default function App() {
                         Estado: {proposal.approved === null ? 'pendiente' : proposal.approved ? 'aprobada' : 'rechazada'}
                       </span>
                     </div>
+                    {proposal.execution_status !== 'not_executed' && (
+                      <div>
+                        <p><strong>Ejecución:</strong> {proposal.execution_status}</p>
+                        {proposal.execution_result && <pre>{proposal.execution_result}</pre>}
+                        {proposal.execution_error && <p className="error">{proposal.execution_error}</p>}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
