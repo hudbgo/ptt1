@@ -1,0 +1,104 @@
+:root {
+  font-family: Inter, Segoe UI, sans-serif;
+  color: #e8e8f3;
+  background: #0f1221;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #1c2240, #0c0f1e 60%);
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+header h1 {
+  margin-bottom: 6px;
+}
+
+.panel, .card {
+  background: rgba(14, 18, 34, 0.9);
+  border: 1px solid #2f3767;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  width: 100%;
+  background: #0b1028;
+  color: #fff;
+  border: 1px solid #354084;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #5b7cfa;
+  color: #fff;
+  cursor: pointer;
+}
+
+button.ghost {
+  background: #31395f;
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.risk {
+  color: #a9bcff;
+}
+
+.vuln {
+  margin-top: 12px;
+  border-top: 1px solid #2f3767;
+  padding-top: 10px;
+}
+
+.proposal {
+  margin-top: 8px;
+  padding: 10px;
+  background: #101735;
+  border-radius: 10px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+pre {
+  white-space: pre-wrap;
+  background: #0a1029;
+  border: 1px solid #24305a;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.error {
+  color: #ffa2a2;
+}

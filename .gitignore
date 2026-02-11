@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+pentest_ai.db
+execution_engine.log
+desktop/node_modules/
+desktop/dist/
+desktop/release/
+node_modules/
+.pytest_cache/
