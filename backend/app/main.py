@@ -10,11 +10,17 @@ from .execution_engine import ExecutionError, execute_action, validate_action
 from .models import Analysis, ExecutionLog, Proposal, Target, Vulnerability
 from .scanner import run_light_scan
 from .schemas import AnalysisOut, ExecuteRequest, ProposalDecision, TargetCreate
+from .ai_engine import PentestAIAgent
+from .database import Base, engine, get_db
+from .models import Analysis, Proposal, Target, Vulnerability
+from .scanner import run_light_scan
+from .schemas import AnalysisOut, ProposalDecision, TargetCreate
 
 Base.metadata.create_all(bind=engine)
 ai_agent = PentestAIAgent()
 
 app = FastAPI(title="Pentest AI Desktop API", version="0.2.0")
+app = FastAPI(title="Pentest AI Desktop API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -149,6 +155,8 @@ def _analysis_to_schema(analysis: Analysis) -> AnalysisOut:
     for vulnerability in analysis.vulnerabilities:
         for proposal in vulnerability.proposals:
             proposal.action_params = json.loads(proposal.action_params or "{}")
+def _analysis_to_schema(analysis: Analysis) -> AnalysisOut:
+    open_ports = [int(p) for p in analysis.open_ports.split(",") if p]
     return AnalysisOut(
         id=analysis.id,
         target=analysis.target.hostname,

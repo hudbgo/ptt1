@@ -83,3 +83,7 @@ class ExecutionLog(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     proposal: Mapped[Proposal] = relationship("Proposal", back_populates="execution_logs")
+    approved: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    vulnerability: Mapped[Vulnerability] = relationship("Vulnerability", back_populates="proposals")

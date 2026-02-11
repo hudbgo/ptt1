@@ -54,6 +54,10 @@ export default function App() {
     }
   }
 
+    await axios.patch(`${API_URL}/proposals/${id}`, { approved })
+    await loadAnalyses()
+  }
+
   return (
     <div className="page">
       <header>
@@ -106,6 +110,9 @@ export default function App() {
                       {proposal.approved === true && (
                         <button onClick={() => executeProposal(proposal)}>Ejecutar</button>
                       )}
+                    <div className="actions">
+                      <button onClick={() => decideProposal(proposal.id, true)}>Aprobar</button>
+                      <button className="ghost" onClick={() => decideProposal(proposal.id, false)}>Rechazar</button>
                       <span>
                         Estado: {proposal.approved === null ? 'pendiente' : proposal.approved ? 'aprobada' : 'rechazada'}
                       </span>

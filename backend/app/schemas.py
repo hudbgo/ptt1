@@ -31,6 +31,7 @@ class ProposalOut(BaseModel):
     execution_error: str | None
     executed_by: str | None
     executed_at: datetime | None
+    approved: bool | None
 
     class Config:
         from_attributes = True

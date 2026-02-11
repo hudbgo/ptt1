@@ -77,6 +77,9 @@ class PentestAIAgent:
                     ),
                     action_key="tcp_connectivity_check",
                     action_params={"ports": [21, 23], "timeout": 1.0},
+                        "Plan: run authenticated checks in an isolated environment, verify weak auth paths, "
+                        "and document remediation. Requires explicit human approval before any intrusive test."
+                    ),
                 )
             )
 
@@ -91,6 +94,10 @@ class PentestAIAgent:
                     proposal_plan="Plan: run DNS and connectivity validation only, no intrusive operations.",
                     action_key="dns_resolve",
                     action_params={},
+                    proposal_plan=(
+                        "Plan: with owner approval, validate TLS/auth configuration and least-privilege policies. "
+                        "Do not execute exploitation; gather evidence for mitigation only."
+                    ),
                 )
             )
 
@@ -105,6 +112,10 @@ class PentestAIAgent:
                     proposal_plan="Plan: perform safe HTTP HEAD checks after human approval.",
                     action_key="http_head_check",
                     action_params={"path": "/"},
+                    proposal_plan=(
+                        "Plan: execute non-destructive checks first (headers, TLS, outdated frameworks), "
+                        "then only proceed with deeper tests after human acceptance."
+                    ),
                 )
             )
 

@@ -34,6 +34,7 @@ header h1 {
 
 input {
   width: 100%;
+  flex: 1;
   background: #0b1028;
   color: #fff;
   border: 1px solid #354084;

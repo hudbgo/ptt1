@@ -1,0 +1,11 @@
+cd backend
+venv\Scripts\activate
+uvicorn app.main:app --reload
+
+
+cd desktop
+npm run dev
+
+
+cd desktop
+npm run electron
