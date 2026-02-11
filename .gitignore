@@ -8,5 +8,3 @@ desktop/dist/
 desktop/release/
 node_modules/
 .pytest_cache/
-
-*.db-journal

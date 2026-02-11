@@ -33,7 +33,6 @@ class RiskPrioritizer(nn.Module):
 
 
 class PentestAIAgent:
-    # NOTE: Este módulo no debe importar ni invocar execution_engine.
     """IA agent: only analyzes and proposes actions, never executes.
 
     Separation of duties: this module is deliberately isolated from execution tooling.

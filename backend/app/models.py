@@ -71,7 +71,6 @@ class Proposal(Base):
 
 
 class ExecutionLog(Base):
-    # Audit trail for each execution attempt.
     __tablename__ = "execution_logs"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)

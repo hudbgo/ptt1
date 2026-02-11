@@ -7,8 +7,7 @@
     "backend": "python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000",
     "frontend": "cd desktop && npm run dev:desktop",
     "run-all": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "build-installer": "cd desktop && npm run dist:win",
-    "check-conflicts": "bash scripts/check_merge_markers.sh"
+    "build-installer": "cd desktop && npm run dist:win"
   },
   "devDependencies": {
     "concurrently": "^9.0.1"
