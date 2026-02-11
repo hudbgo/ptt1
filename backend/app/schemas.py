@@ -57,3 +57,9 @@ class AnalysisOut(BaseModel):
     risk_score: float
     vulnerabilities: list[VulnerabilityOut]
     created_at: datetime
+
+
+class ExecuteResponse(BaseModel):
+    proposal_id: int
+    execution_status: str
+    execution_result: dict

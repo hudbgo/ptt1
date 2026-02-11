@@ -43,11 +43,15 @@ export default function App() {
   const executeProposal = async (proposal) => {
     const actionInfo = `Se ejecutará acción segura: ${proposal.action_key}\nParámetros: ${JSON.stringify(proposal.action_params)}`
     if (!window.confirm(actionInfo)) return
-    await axios.post(`${API_URL}/execute`, {
-      proposal_id: proposal.id,
-      executed_by: operator,
-    })
-    await loadAnalyses()
+    try {
+      await axios.post(`${API_URL}/execute`, {
+        proposal_id: proposal.id,
+        executed_by: operator,
+      })
+      await loadAnalyses()
+    } catch {
+      setError('No se pudo ejecutar la propuesta aprobada.')
+    }
   }
 
   return (

@@ -99,6 +99,7 @@ def decide_proposal(proposal_id: int, decision: ProposalDecision, db: Session = 
 
 
 @app.post("/execute")
+# Execution endpoint: human-gated only. Never callable by AI directly.
 def execute_proposal(payload: ExecuteRequest, db: Session = Depends(get_db)) -> dict:
     proposal = db.query(Proposal).filter(Proposal.id == payload.proposal_id).first()
     if not proposal:

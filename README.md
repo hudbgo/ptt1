@@ -77,3 +77,6 @@ Incluye validación de:
 npm run build-installer
 ```
 Salida en `desktop/release/`.
+
+## Notas de control de cambios
+- Se prioriza la resolución de conflictos manteniendo el modelo de seguridad: IA propone, humano aprueba y el engine ejecuta solo acciones permitidas.

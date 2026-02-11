@@ -102,3 +102,8 @@ pre {
 .error {
   color: #ffa2a2;
 }
+
+
+.muted {
+  opacity: 0.8;
+}
